@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "platform.h"
 #include "xil_printf.h"
 #include "xbasic_types.h"
 #include "xparameters.h"
@@ -17,7 +16,7 @@ Xuint8 unwaited_read(unsigned char *valid) {
 int main() {
 	Xuint32 data;
 	Xuint8 inp, valid;
-	Xuint8 last_send_request = 0;
+	Xuint8 last_send_request = 0, last_print_request = 0;
 	Xuint8 send_request, print_request;
     volatile Xuint32 *slaveaddr_p = (Xuint32 *) XPAR_USART_TO_PL_0_S00_AXI_BASEADDR;
 
@@ -47,11 +46,16 @@ int main() {
 		data = *(slaveaddr_p+2);
 		print_request = is_valid(data);
 		if (print_request) {
-			xil_printf("%c", data&0xFFFF);
-			*(slaveaddr_p+1) = 1; // print ok
+			if (print_request != last_print_request) {
+				xil_printf("%c", data&0xFFFF);
+				*(slaveaddr_p+1) = 1; // print ok
+
+				last_print_request = print_request;
+			}
 		}
 		else {
 			*(slaveaddr_p+1) = 0; // done printing
+			last_print_request = print_request;
 		}
     }
 
