@@ -2,6 +2,14 @@
 
 In this tutorial you'll learn how to exchange information between the PS and PL, effectively allowing to read and write to the default USART from the PL.
 
+## The results
+
+In this example the USART data will be sent to the PL, and then the PL will send back the same data to the PL to be print in the terminal, and also (if it's a number) it will light their corresponding binary value using the on-board LEDs.
+
+![steps](./images/steps.gif "steps")
+
+![results](./images/results.jpg "results")
+
 ## Requirements
 
 - Vivado & Vitis 2023.1 (you can check how to install them [here](https://digilent.com/reference/programmable-logic/guides/installing-vivado-and-vitis))
@@ -118,7 +126,7 @@ usart_to_pl_v1_0_S00_AXI_inst : usart_to_pl_v1_0_S00_AXI
 
 
 
-24 (bug)[https://support.xilinx.com/s/question/0D52E00006iHq5pSAC/board-images-not-set-and-xpfm-file-deleted-automatically]:
+24 [bug](https://support.xilinx.com/s/question/0D52E00006iHq5pSAC/board-images-not-set-and-xpfm-file-deleted-automatically):
 change:
 ```
 INCLUDEFILES=*.h
